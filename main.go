@@ -21,20 +21,18 @@ func NewPost(b string, t int64) *Post {
 type Feed struct {
 	length int
 	start  *Post
+	end    *Post
 }
 
 // Append adds a post to the feed
 func (f *Feed) Append(newPost *Post) {
 	if f.length == 0 {
 		f.start = newPost
+		f.end = newPost
 	} else {
-		currentPost := f.start
-		// keep looping through until you get to the end
-		for currentPost.next != nil {
-			currentPost = currentPost.next
-		}
-		// by the time its get here next is going to be nil ready for the newPost
-		currentPost.next = newPost
+		lastPost := f.end
+		lastPost.next = newPost
+		f.end = newPost
 	}
 	f.length++
 }
