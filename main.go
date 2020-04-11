@@ -48,7 +48,7 @@ func main() {
 	fmt.Printf("Length: %v\n", f.length)
 	fmt.Printf("First post: %v\n", f.start)
 
-	p2 := &Post{body: "You are not seen"}
+	p2 := NewPost("No one can see you", time.Now().Unix())
 
 	f.Append(p2)
 
