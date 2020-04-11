@@ -1,12 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 // Post represents a tweet, FB post etc
 type Post struct {
 	body        string
 	publishDate int64
 	next        *Post
+}
+
+// NewPost factory function to create a new Post
+func NewPost(b string, t int64) *Post {
+	return &Post{body: b, publishDate: t}
 }
 
 // Feed is like a news feed on social media
@@ -33,7 +41,7 @@ func (f *Feed) Append(newPost *Post) {
 
 func main() {
 	f := &Feed{}
-	post := &Post{body: "You have gone incognito"}
+	post := NewPost("You have gone incognito", time.Now().Unix())
 
 	f.Append(post)
 
