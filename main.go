@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"time"
 )
@@ -21,7 +22,7 @@ func NewPost(b string, t int64) *Post {
 type Feed struct {
 	length int
 	start  *Post
-	end    *Post
+	end    *Post // big-O: O(1) constant time
 }
 
 // Append adds a post to the feed
@@ -35,6 +36,28 @@ func (f *Feed) Append(newPost *Post) {
 		f.end = newPost
 	}
 	f.length++
+}
+
+// Remove deletes a post from the feed
+func (f *Feed) Remove(publishDate int64) {
+	if f.length == 0 {
+		panic(errors.New("Feed is empty"))
+	}
+
+	var previousPost *Post
+	currentPost := f.start
+
+	for currentPost.publishDate != publishDate {
+		if currentPost.next == nil {
+			panic(errors.New("No such Post found"))
+		}
+
+		previousPost = currentPost
+		currentPost = currentPost.next
+	}
+	previousPost.next = currentPost.next
+	f.length--
+
 }
 
 func main() {
