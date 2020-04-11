@@ -2,17 +2,20 @@ package main
 
 import "fmt"
 
+// Post represents a tweet, FB post etc
 type Post struct {
 	body        string
 	publishDate int64
 	next        *Post
 }
 
+// Feed is like a news feed on social media
 type Feed struct {
 	length int
 	start  *Post
 }
 
+// Append adds a post to the feed
 func (f *Feed) Append(newPost *Post) {
 	if f.length == 0 {
 		f.start = newPost
