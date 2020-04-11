@@ -21,9 +21,11 @@ func (f *Feed) Append(newPost *Post) {
 		f.start = newPost
 	} else {
 		currentPost := f.start
+		// keep looping through until you get to the end
 		for currentPost.next != nil {
 			currentPost = currentPost.next
 		}
+		// by the time its get here next is going to be nil ready for the newPost
 		currentPost.next = newPost
 	}
 	f.length++
@@ -36,12 +38,13 @@ func main() {
 	f.Append(post)
 
 	fmt.Printf("Length: %v\n", f.length)
-	fmt.Printf("First post: %s\n", f.start.body)
+	fmt.Printf("First post: %v\n", f.start)
 
 	p2 := &Post{body: "You are not seen"}
 
 	f.Append(p2)
 
 	fmt.Printf("Length: %v\n", f.length)
-	fmt.Printf("Second post: %s\n", f.start.next.body)
+	fmt.Printf("First post with next pointer: %v\n", f.start)
+	fmt.Printf("Second post: %v\n", f.start.next)
 }
