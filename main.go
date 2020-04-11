@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type Post struct {
 	body        string
 	publishDate int64
@@ -25,5 +27,18 @@ func (f *Feed) Append(newPost *Post) {
 }
 
 func main() {
+	f := &Feed{}
+	post := &Post{body: "You have gone incognito"}
 
+	f.Append(post)
+
+	fmt.Printf("Length: %v\n", f.length)
+	fmt.Printf("First post: %s\n", f.start.body)
+
+	p2 := &Post{body: "You are not seen"}
+
+	f.Append(p2)
+
+	fmt.Printf("Length: %v\n", f.length)
+	fmt.Printf("Second post: %s\n", f.start.next.body)
 }
