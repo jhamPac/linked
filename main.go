@@ -57,7 +57,25 @@ func (f *Feed) Remove(publishDate int64) {
 	}
 	previousPost.next = currentPost.next
 	f.length--
+}
 
+// Insert posts if they are not in chronological order
+func (f *Feed) Insert(newPost *Post) {
+	if f.length == 0 {
+		f.start = newPost
+	} else {
+		var previousPost *Post
+		currentPost := f.start
+
+		for currentPost.publishDate < newPost.publishDate {
+			previousPost = currentPost
+			currentPost = previousPost.next
+		}
+
+		previousPost.next = newPost
+		newPost.next = currentPost
+	}
+	f.length++
 }
 
 func main() {
